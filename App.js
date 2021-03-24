@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import Termostat from './src/components/Termostat';
 import User from './User';
 
 const phrase = 'Boyer'
@@ -19,6 +20,7 @@ const Welcome = ({name}) =>  <Text>Hello, {name} !! </Text>
 
 export default function App ()
 {
+  // etat local du composant App et une variable age
   const [age, setAge] = useState(30)
   
   const modifAge = () =>
@@ -34,6 +36,7 @@ export default function App ()
       <Welcome name="Sara" />
       <User age={age}></User>
       <Button title="Ajouter +1 à votre âge" onPress={() => modifAge()}></Button>
+      <Termostat></Termostat>
     </View>
   );
 }
