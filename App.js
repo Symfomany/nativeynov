@@ -1,12 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import User from './User';
 
-export default function App() {
+const phrase = 'Boyer'
+
+function lol ()
+{
+  return 'D\'accord '
+}
+
+function Message({title})
+{
+  return ( <Text>Hello Julien { phrase} {title} {lol()} ^^</Text>)
+}
+
+const Welcome = ({name}) =>  <Text>Hello, {name} !! </Text>
+
+
+export default function App ()
+{
+  const [age, setAge] = useState(30)
+  
+  const modifAge = () =>
+  {
+    const increase = age + 1
+    setAge(increase)
+  }
+  
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.txt}>Hello YNOV !! Web Mobile 🐪</Text>
+      <Message title='Coucou petite perruche !' />
+      <Welcome name="Sara" />
+      <User age={age}></User>
+      <Button title="Ajouter +1 à votre âge" onPress={() => modifAge()}></Button>
     </View>
   );
 }
@@ -18,4 +45,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  txt: {
+    color: "pink",
+    fontSize: 22
+  }
 });
