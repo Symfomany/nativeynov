@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import Demo from './src/components/Demo';
 import Termostat from './src/components/Termostat';
 import User from './User';
+// import {NavigationContainer } from '@react-navigation/native'
+// import { createStackNavigator } from '@react-navigation/stack'
+// const AuthStack = createStackNavigator()
 
+// import {Home, Profil} from './Screens'
 const phrase = 'Boyer'
 
 function lol ()
 {
   return 'D\'accord '
 }
+
+
 
 function Message({title})
 {
@@ -30,23 +37,17 @@ export default function App ()
   }
   
   return (
-    <View style={styles.container}>
-      <Text style={styles.txt}>Hello YNOV !! Web Mobile 🐪</Text>
-      <Message title='Coucou petite perruche !' />
-      <Welcome name="Sara" />
-      <User age={age}></User>
-      <Button title="Ajouter +1 à votre âge" onPress={() => modifAge()}></Button>
-      <Termostat></Termostat>
-    </View>
+     <Demo></Demo>
+ 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // flex: 1,
+    // backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   txt: {
     color: "pink",

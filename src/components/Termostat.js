@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, StyleSheet, View, Text, Image, TouchableOpacity, Animated } from 'react-native';
 
 
 export default function Termostat ()
@@ -9,6 +9,36 @@ export default function Termostat ()
   const [climatisation, setClimatisation] = useState( false )
   const [forbidden, setForbidden] = useState( false )
 
+  
+  const FadeInView = (props) =>
+  {
+  const fadeAnim = useRef( new Animated.Value( 0 ) ).current
+    
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 10000,
+      }
+    ).start();
+  }, [climatisation] )
+    
+    return (
+      <Animated.View               
+        style={{
+          ...props.style,
+          opacity: fadeAnim,      
+        }}
+      >
+        {props.children}
+      </Animated.View>
+    );
+    
+  }
+
+  
+  
   useEffect( () =>
   {
     if ( temperature < 14 || temperature > 28 )
@@ -24,7 +54,7 @@ export default function Termostat ()
   const increase = () => setTemperature(temperature + 1)
   const decrease = () => setTemperature(temperature - 1)
   const climatiser = () => { setTemperature( 16 ); setClimatisation(true) }
-
+  
     return (
         <View style={styles.container}>
             <Image
@@ -43,7 +73,8 @@ export default function Termostat ()
             >
               <Text>Activer la clim</Text>
             </TouchableOpacity>
-            { climatisation && <Text>La climatisation est activé</Text>}
+        { climatisation && <FadeInView style={{ width: 250, height: 50, backgroundColor: "pink", padding: 10 }}>
+          <Text>La climatisation est activée</Text></FadeInView>}
             {/* {forbidden ? <Text>Temperature interdite</Text> : <Text>Temperature autorisée</Text>} */}
         
         
