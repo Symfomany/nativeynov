@@ -1,43 +1,38 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import Demo from './src/components/Demo';
 import Termostat from './src/components/Termostat';
-import User from './User';
+
+import { Provider } from "react-redux";
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './store';
+
+
 // import {NavigationContainer } from '@react-navigation/native'
 // import { createStackNavigator } from '@react-navigation/stack'
 // const AuthStack = createStackNavigator()
 
-// import {Home, Profil} from './Screens'
-const phrase = 'Boyer'
-
-function lol ()
-{
-  return 'D\'accord '
-}
 
 
-
-function Message({title})
-{
-  return ( <Text>Hello Julien { phrase} {title} {lol()} ^^</Text>)
-}
-
-const Welcome = ({name}) =>  <Text>Hello, {name} !! </Text>
-
+const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
 
 export default function App ()
 {
   // etat local du composant App et une variable age
-  const [age, setAge] = useState(30)
-  
-  const modifAge = () =>
-  {
-    const increase = age + 1
-    setAge(increase)
-  }
-  
   return (
-     <Demo></Demo>
+    <Provider store={store}>
+        <Termostat></Termostat>
+      </Provider>
+    //  rendre nos données d’app disponibles aux composants
+    // <Provider store={store}>
+      /* Intercepte les modifications faites sur ce store Redux pour les enregistrer de manière persistante dans la mémoire du téléphone de l’utilisateur */
+      // 
+        
+      // </PersistGate>
+    // </Provider>
  
   );
 }

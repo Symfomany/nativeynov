@@ -1,20 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, StyleSheet, View, Text, Image, TouchableOpacity, Animated } from 'react-native';
+import { Switch } from 'react-native-gesture-handler';
+import { Counter } from './Counter';
+import axios from 'axios'
 
+// Bonne pratique: créer les données à mapper dans le composant en props
+// const mapStateToProps = state => ({
+// 	titles: state.titles,
+// } );
 
 export default function Termostat ()
 {
-  
   const [temperature, setTemperature] = useState( 25 )
   const [climatisation, setClimatisation] = useState( false )
   const [forbidden, setForbidden] = useState( false )
-
-  
+  const [ville, setVille] = useState('lyon');
+ 
   const FadeInView = (props) =>
   {
   const fadeAnim = useRef( new Animated.Value( 0 ) ).current
     
-  useEffect(() => {
+    useEffect( () =>
+    {
+    
     Animated.timing(
       fadeAnim,
       {
@@ -37,7 +45,24 @@ export default function Termostat ()
     
   }
 
-  
+  useEffect( () =>
+  {
+    const load = async () =>
+    {
+      try
+      {
+        const res = await axios.get( `http://api.weatherapi.com/v1/current.json?key=d7a5fc2bd288493fa79123336212403&q=${ ville }&aqi=yes` )
+        setTemperature(res.data.current.temp_c)
+      } catch ( e )
+      {
+        console.log(e)
+      }
+       
+    }
+    
+    load()
+    
+  }, [ville])
   
   useEffect( () =>
   {
@@ -60,10 +85,31 @@ export default function Termostat ()
             <Image
                 style={styles.tinyLogo}
                 source={require('../../assets/meteo.png')}
-                />
-            <Button onPress={increase} title="+1"></Button>
-        <Button onPress={decrease} title="-1"></Button>
+        />
+        {/* <Counter></Counter> */}
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={ville === "Marseille" ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={() => setVille('Marseille')}
+        />
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={ville === "Paris"  ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={() => setVille('Paris')}
+        />
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={ville === "Lyon"  ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={() => setVille('Lyon')}
+        />
+        <Text>Ville: {ville}</Text>
         
+        
+        <Button onPress={increase} title="+1"></Button>
+        <Button onPress={decrease} title="-1"></Button>
         <Button onPress={() => setTemperature((temperature -32 ) / 1.8 )}  title="Conversion en F"></Button>
             <Text>Température: {temperature} </Text>
             {forbidden && <Text>Temperature interdite</Text>}
@@ -83,6 +129,8 @@ export default function Termostat ()
     
 }
 
+// // connecter le composant aux state du Store
+// export default connect(mapStateToProps)(Termostat);
 
 const styles = StyleSheet.create( {
   button: {
