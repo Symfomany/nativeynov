@@ -5,6 +5,10 @@ import Termostat from './src/components/Termostat';
 import { Provider } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './store';
+import moviesReducer from './store/movies';
+
+import { Counter } from './src/components/Counter';
+import { Movies } from './src/components/Movies';
 
 
 // import {NavigationContainer } from '@react-navigation/native'
@@ -16,6 +20,7 @@ import counterReducer from './store';
 const store = configureStore({
   reducer: {
     counter: counterReducer,
+    movies: moviesReducer
   },
 });
 
@@ -24,7 +29,9 @@ export default function App ()
   // etat local du composant App et une variable age
   return (
     <Provider store={store}>
-        <Termostat></Termostat>
+      <Counter></Counter>
+      <Movies></Movies>
+      <Termostat></Termostat>
       </Provider>
     //  rendre nos données d’app disponibles aux composants
     // <Provider store={store}>

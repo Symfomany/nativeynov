@@ -3,6 +3,7 @@ import { Button, StyleSheet, View, Text, Image, TouchableOpacity, Animated } fro
 import { Switch } from 'react-native-gesture-handler';
 import { Counter } from './Counter';
 import axios from 'axios'
+import { Movies } from './Movies';
 
 // Bonne pratique: créer les données à mapper dans le composant en props
 // const mapStateToProps = state => ({
@@ -86,7 +87,6 @@ export default function Termostat ()
                 style={styles.tinyLogo}
                 source={require('../../assets/meteo.png')}
         />
-        {/* <Counter></Counter> */}
         <Switch
           trackColor={{ false: "#767577", true: "#81b0ff" }}
           thumbColor={ville === "Marseille" ? "#f5dd4b" : "#f4f3f4"}
@@ -106,7 +106,6 @@ export default function Termostat ()
           onValueChange={() => setVille('Lyon')}
         />
         <Text>Ville: {ville}</Text>
-        
         
         <Button onPress={increase} title="+1"></Button>
         <Button onPress={decrease} title="-1"></Button>
